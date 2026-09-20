@@ -1,5 +1,7 @@
 # Ternary Consensus Mesh: Line-Rate Post-Quantum Byzantine Consensus
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22851921.svg)](https://doi.org/10.5281/zenodo.22851921)
+
 This repository contains the reference eBPF/XDP drivers, Triton GPU lookup kernels, and microbenchmarking suites for the paper:
 
 > **"Radix Economy and Balanced Ternary Microarchitectures: Resolving the Memory Wall in Line-Rate Post-Quantum Consensus and Nanoscale Computing"**  
