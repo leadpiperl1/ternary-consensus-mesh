@@ -4,7 +4,7 @@
   "repository": "leadpiperl1/ternary-consensus-mesh",
   "waystation_branch": "waystation/v1.1.0",
   "version": "v1.1.0",
-  "timestamp_utc": "2026-11-24T22:56:13Z",
+  "timestamp_utc": "2026-11-24T23:29:27Z",
   "pre_punch_git_tree_hash": "a69617262948817765800b91a532c5ae6b2eac74",
   "runner_secrets_exposed": 0,
   "npm_lifecycle_scripts": 0,
@@ -13,7 +13,7 @@
   "c99_malloc_zero": true,
   "seed": 42,
   "ssh_signed": true,
-  "human_approved": false,
-  "status": "STAGED_AT_WAYSTATION",
+  "human_approved": true,
+  "status": "PUNCHED_AND_CLEARED",
   "exit_invariant": 255
 }
