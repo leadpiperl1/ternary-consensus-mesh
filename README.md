@@ -1,64 +1,42 @@
-# Ternary Consensus Mesh: Line-Rate Post-Quantum Byzantine Consensus
+# Ternary Consensus Mesh (`v1.1.0`): Line-Rate Post-Quantum Byzantine Consensus
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22851921.svg)](https://doi.org/10.5281/zenodo.22851921)
+[![SWAR Companion DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24510014.svg)](https://doi.org/10.5281/zenodo.24510014)
+[![Waystation CI](https://img.shields.io/badge/Waystation_CI-S__runner%3D0_%C2%B7_14d_Cooldown-34D399?style=flat-square)](.github/workflows/waystation-ci.yml)
+[![Exit Invariant: 255](https://img.shields.io/badge/CODE__SHOKUNIN__UNLATCHED-255-F59E0B?style=flat-square)](waystation_punchcard.json)
 
-This repository contains the reference eBPF/XDP drivers, Triton GPU lookup kernels, and microbenchmarking suites for the paper:
+Reference eBPF/XDP driver, strict **64-byte L1D-aligned ISO C99 verifier (`malloc = 0`)**, Triton GPU lookup kernel, and **100% pure Python 3 stdlib** microbenchmarking harness for:
 
-> **"Radix Economy and Balanced Ternary Microarchitectures: Resolving the Memory Wall in Line-Rate Post-Quantum Consensus and Nanoscale Computing"**  
-> *Target Venues: SOSP / OSDI / ISCA / ASPLOS*
-
----
-
-## Key Technical Highlights
-
-1. **64-Byte L1D Cache-Resident Frame**: Compresses a 128-node consensus vote bitmask to 26 bytes ($3^5 = 243 \le 256$), enabling the entire synchronous descriptor (epoch + BLAKE3 accumulator + status flags) to fit within exactly one 64-byte L1D cache line.
-2. **Deterministic Wire Latency**: Evaluated via eBPF XDP at 100GbE line-rate (99.2 Mpps aggregate across 8 queues, 12.4 Mpps/core) with $p50 = 40.0\text{ ns}$ and $p99.9 = 60.0\text{ ns}$, safely below the $80.5\text{ ns}$ frame budget.
-3. **State-Crypt Separation**: Decouples the 64-byte synchronous consensus frame from asynchronous ML-DSA-44 (NIST FIPS 204) signature verification offloaded over 2MB hugepage lock-free SPSC rings.
-4. **Conflict-Free GPU Decompression**: Triton kernel maps 5-trit packed bytes into FP16 ternary weights with zero shared-memory bank conflicts using single-cycle hardware broadcast addressing.
+> **"Radix Economy and Balanced Ternary Microarchitectures: Resolving the Memory Wall in Line-Rate Post-Quantum Consensus and Nanoscale Computing"** ([DOI: 10.5281/zenodo.22851921](https://doi.org/10.5281/zenodo.22851921)) & **64-Trit SWAR POPCNT SUB-04 Substrate v2.0.0** ([DOI: 10.5281/zenodo.24510014](https://doi.org/10.5281/zenodo.24510014))
 
 ---
 
-## Repository Structure
+## Key Technical Highlights (`v1.1.0`)
 
-* `xdp_ternary_filter.c` - Production eBPF XDP C driver for line-rate packet parsing, SipHash-2-4 pre-authentication, monotonic epoch tracking, and fast-path quorum accumulation.
-* `triton_lut_kernel.py` - Triton GPU kernel for high-throughput 5-trit decompression on Tensor Cores.
-* `benchmark_harness.py` - Microarchitectural evaluation reproducing the latency and throughput ablations across 64-byte ternary and 96-byte binary frames.
-* `LICENSE` - MIT License.
+1. **Exact 64-Byte L1D Cache-Resident Frame (`8 + 28 + 26 + 1 + 1 = 64 B`)**: Fixed `struct HotStateEntry` to exact 64-byte packing (`uint64_t epoch_counter` + 224-bit `blake3_digest[28]` + 128-node `trit_votes[26]` at 5 trits/byte + `status_flags` + `round_phase`), compile-time locked and verified on host via [`src/verify_hotstate_64b_v1_1_0.c`](src/verify_hotstate_64b_v1_1_0.c) (`malloc = 0`, `-std=c99 -Werror -pedantic`, `CODE_SHOKUNIN_UNLATCHED = 255`).
+2. **Deterministic Wire Latency**: Pure-stdlib [`benchmark_harness.py`](benchmark_harness.py) (`--seed 42`, zero `numpy`) verifies 64-byte ternary p99.9 latency safely below the `80.5 ns` 100GbE frame budget vs. 96-byte binary PBFT cache-line splits.
+3. **Waystation `wfx-loot` Immunity**: `S_runner = 0`, `permissions: contents: read`, SHA-pinned `actions/checkout` (`persist-credentials: false`), `zizmor`, and 14-day Dependabot cooldown.
 
 ---
 
-## Build & Usage Instructions
+## Quick Start (`<= 60s` Deterministic Verification)
 
-### 1. Compile the eBPF XDP Filter
 ```bash
-# Requires clang and libbpf
-clang -O2 -target bpf -c xdp_ternary_filter.c -o xdp_ternary_filter.o
-
-# Attach to your 100GbE network interface (e.g. eth0) in native XDP mode
-ip link set dev eth0 xdpgeneric obj xdp_ternary_filter.o sec xdp
+make clean && make verify
 ```
 
-### 2. Run the Triton GPU Decompression Kernel
+### Optional eBPF/XDP & GPU Targets
+
 ```bash
-# Requires PyTorch and Triton
+# Requires clang and libbpf:
+clang -O2 -target bpf -c xdp_ternary_filter.c -o xdp_ternary_filter.o
+
+# Requires PyTorch and Triton:
 python3 triton_lut_kernel.py
 ```
 
-### 3. Run the Microbenchmarking Suite
-```bash
-python3 benchmark_harness.py
-```
-
 ---
 
-## Citation
-```bibtex
-@article{grimm2026radix,
-  title={Radix Economy and Balanced Ternary Microarchitectures: Resolving the Memory Wall in Line-Rate Post-Quantum Consensus and Nanoscale Computing},
-  author={Grimm, Justin},
-  year={2026}
-}
-```
+## License & Attribution
 
-## License
-MIT License - Copyright (c) 2026 Justin Grimm.
+MIT License — Justin D. Grimm (Independent Dandelion Substrate Research Group, Gurley, Alabama 35748, USA · [ORCID: 0009-0000-5299-0243](https://orcid.org/0009-0000-5299-0243)) · `CODE_SHOKUNIN_UNLATCHED = 255`.

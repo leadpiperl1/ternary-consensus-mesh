@@ -22,11 +22,11 @@
 #define UDP_CONSENSUS_PORT 9999
 
 /*
- * 64-Byte Invariant Cache-Line Structure
+ * 64-Byte Invariant Cache-Line Structure (8 + 28 + 26 + 1 + 1 = 64 bytes exact)
  */
 struct __attribute__((__packed__)) HotStateEntry {
     __u64 epoch_counter;       // 8 bytes: Monotonically increasing consensus epoch
-    __u8  blake3_digest[32];   // 32 bytes: Merkle root / state digest accumulator
+    __u8  blake3_digest[28];   // 28 bytes: 224-bit BLAKE3 Merkle root / state digest accumulator
     __u8  trit_votes[26];      // 26 bytes: 128 nodes packed at 5 trits/byte (26 * 5 = 130 trits)
     __u8  status_flags;        // 1 byte: 0x01 = Commit, 0x02 = Abort, 0x04 = Quorum Verified
     __u8  round_phase;         // 1 byte: Round phase indicator

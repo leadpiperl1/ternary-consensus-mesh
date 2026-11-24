@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use the Ternary Consensus Mesh eBPF/XDP driver, 64-byte ABI verifier, or benchmark suite, please cite it using this metadata."
+type: software
+title: "Ternary Consensus Mesh (v1.1.0): Line-Rate Post-Quantum Byzantine Consensus via 64-Byte L1D-Resident Balanced Ternary"
+version: 1.1.0
+date-released: 2026-11-24
+doi: 10.5281/zenodo.22851921
+license: MIT
+repository-code: "https://github.com/leadpiperl1/ternary-consensus-mesh"
+url: "https://github.com/leadpiperl1/ternary-consensus-mesh"
+authors:
+  - family-names: "Grimm"
+    given-names: "Justin D."
+    affiliation: "Independent Dandelion Substrate Research Group, Gurley, Alabama 35748, USA"
+    orcid: "https://orcid.org/0009-0000-5299-0243"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22851921
+    description: "Radix Economy and Balanced Ternary Microarchitectures (Founding Preprint)"
+  - type: doi
+    value: 10.5281/zenodo.24510014
+    description: "64-Trit SWAR POPCNT SUB-04 Substrate (v2.0.0)"

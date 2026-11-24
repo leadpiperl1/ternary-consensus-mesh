@@ -1,0 +1,17 @@
+# .github/dependabot.yml
+# Enforces cooldown >= 14 days (zizmor clean, Eli Whitney supply-chain quarantine)
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "America/Chicago"
+    cooldown:
+      default-days: 14
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"

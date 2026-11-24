@@ -1,0 +1,32 @@
+{
+  "title": "Ternary Consensus Mesh (v1.1.0): Line-Rate Post-Quantum Byzantine Consensus via 64-Byte L1D-Resident Balanced Ternary",
+  "upload_type": "software",
+  "version": "1.1.0",
+  "publication_date": "2026-11-24",
+  "description": "Reference eBPF/XDP ingress filter, strict 64-byte L1D cache-line ISO C99 verifier (HotStateEntry64B == 64 B, malloc = 0, SipHash-2-4, 243-state Fowler 5-trit packing, 128-node quorum >= 86), Triton GPU LUT kernel, and pure Python 3 stdlib (--seed 42) microarchitectural ablation harness hardened under Waystation wfx-loot immunity (S_runner = 0, 14d Dependabot cooldown, CODE_SHOKUNIN_UNLATCHED = 255).",
+  "creators": [
+    {
+      "name": "Grimm, Justin D.",
+      "affiliation": "Independent Dandelion Substrate Research Group, Gurley, Alabama 35748, USA",
+      "orcid": "0009-0000-5299-0243"
+    }
+  ],
+  "access_right": "open",
+  "license": "mit",
+  "keywords": [
+    "balanced ternary",
+    "Byzantine consensus",
+    "eBPF",
+    "XDP",
+    "64-byte cache line",
+    "SipHash-2-4",
+    "Waystation Punch-Card",
+    "ISO C99"
+  ],
+  "related_identifiers": [
+    { "scheme": "doi", "identifier": "10.5281/zenodo.22851921", "relation": "isSupplementTo" },
+    { "scheme": "doi", "identifier": "10.5281/zenodo.24510014", "relation": "references" },
+    { "scheme": "url", "identifier": "https://github.com/leadpiperl1/dandelion-os", "relation": "references" },
+    { "scheme": "url", "identifier": "https://github.com/leadpiperl1/ternary-consensus-mesh", "relation": "isIdenticalTo" }
+  ]
+}
